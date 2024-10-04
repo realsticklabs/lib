@@ -15,16 +15,13 @@
     <br>
     <button id="downloadBtn">Download as .spi</button>
     <button id="compressBtn">Compress to .smallprog</button>
-    <input type="file" id="fileInput" accept=".txt,.smallprog" onchange="interpreter.loadFile(event)">
+    <input type="file" id="fileInput" accept=".txt,.smallprog" onchange="loadFile(event)">
 
     <script>
-        // Create an instance of SmallProgInterpreter
-        const interpreter = new SmallProgInterpreter("input", "output");
-
         // Set up button click handlers
-        document.getElementById("interpretBtn").onclick = () => interpreter.interpret();
-        document.getElementById("downloadBtn").onclick = () => interpreter.downloadFile('smallprog', 'spi');
-        document.getElementById("compressBtn").onclick = () => interpreter.compressToBase64();
+        document.getElementById("interpretBtn").onclick = interpret;
+        document.getElementById("downloadBtn").onclick = () => downloadFile('smallprog', 'spi');
+        document.getElementById("compressBtn").onclick = compressToBase64;
     </script>
 </body>
 </html>
