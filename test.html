@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squeak2JS - URL Loader</title>
+</head>
+<body>
+
+<h1>Squeak2JS File Loader via URL</h1>
+<input type="text" id="urlInput" placeholder="Enter .image file URL" />
+<button id="loadButton">Load .image from URL</button>
+<button id="saveButton">Save .image</button>
+<button id="runCodeButton">Run Code</button>
+
+<script src="squeak2js.js"></script>
+<script>
+    const squeakEnv = new Squeak2JS();
+
+    // Load the .image file from the entered URL
+    document.getElementById('loadButton').addEventListener('click', function() {
+        const url = document.getElementById('urlInput').value;
+        squeakEnv.loadImageFileFromURL(url, function(objects) {
+            console.log('Loaded objects:', objects);
+        });
+    });
+
+    // Save the modified environment to a .image file
+    document.getElementById('saveButton').addEventListener('click', function() {
+        squeakEnv.saveToImageFile('modifiedSqueakEnv');
+    });
+
+    // Run some code in the environment
+    document.getElementById('runCodeButton').addEventListener('click', function() {
+        squeakEnv.runCode('squeakEnv.addObject("newObject", { foo: "bar" });');
+        console.log(squeakEnv.getObject("newObject"));
+    });
+</script>
+
+</body>
+</html>
