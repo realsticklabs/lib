@@ -3,39 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Squeak2JS - URL Loader</title>
+    <title>SmallProg Interpreter</title>
+    <script src="spi2js.js" defer></script>
 </head>
 <body>
+    <h1>SmallProg Interpreter</h1>
+    <textarea id="input" placeholder="Enter SmallProg program" style="height: 150px;"></textarea><br>
+    <button id="interpretBtn">Interpret</button>
+    <p>Hint (Only works on specific browsers): Spacebar is number 32</p>
+    <div id="output"></div>
+    <br>
+    <button id="downloadBtn">Download as .spi</button>
+    <button id="compressBtn">Compress to .smallprog</button>
+    <input type="file" id="fileInput" accept=".txt,.smallprog" onchange="interpreter.loadFile(event)">
 
-<h1>Squeak2JS File Loader via URL</h1>
-<input type="text" id="urlInput" placeholder="Enter .image file URL" />
-<button id="loadButton">Load .image from URL</button>
-<button id="saveButton">Save .image</button>
-<button id="runCodeButton">Run Code</button>
+    <script>
+        const interpreter = new SmallProgInterpreter("input", "output");
 
-<script src="squeak2js.js"></script>
-<script>
-    const squeakEnv = new Squeak2JS();
-
-    // Load the .image file from the entered URL
-    document.getElementById('loadButton').addEventListener('click', function() {
-        const url = document.getElementById('urlInput').value;
-        squeakEnv.loadImageFileFromURL(url, function(objects) {
-            console.log('Loaded objects:', objects);
-        });
-    });
-
-    // Save the modified environment to a .image file
-    document.getElementById('saveButton').addEventListener('click', function() {
-        squeakEnv.saveToImageFile('modifiedSqueakEnv');
-    });
-
-    // Run some code in the environment
-    document.getElementById('runCodeButton').addEventListener('click', function() {
-        squeakEnv.runCode('squeakEnv.addObject("newObject", { foo: "bar" });');
-        console.log(squeakEnv.getObject("newObject"));
-    });
-</script>
-
+        document.getElementById("interpretBtn").onclick = () => interpreter.interpret();
+        document.getElementById("downloadBtn").onclick = () => interpreter.downloadFile('smallprog', 'spi');
+        document.getElementById("compressBtn").onclick = () => interpreter.compressToBase64();
+    </script>
 </body>
 </html>
