@@ -1,5 +1,3 @@
-console.log("spitojs loaded");
-
 class SmallProgInterpreter {
     constructor(inputElementId, outputElementId) {
         this.inputElement = document.getElementById(inputElementId);
@@ -10,7 +8,12 @@ class SmallProgInterpreter {
         const input = this.inputElement.value.trim().split("\n"); // Split input by lines
         const output = [];
 
-        // (Processing logic has been removed as per your request)
+        // Process each line of input
+        input.forEach(line => {
+            const values = line.trim().split(" ").map(e => parseInt(e)); // Split line by spaces and convert to numbers
+            const lineOutput = values.map(e => isNaN(e) ? '&' : String.fromCharCode(e + 96)).join(""); // Interpret each value in the line
+            output.push(lineOutput); // Store the interpreted line
+        });
 
         // Display all interpreted lines
         this.outputElement.innerText = output.join("\n");
