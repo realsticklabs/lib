@@ -1,3 +1,5 @@
+console.log("spitojs loaded");
+
 class SmallProgInterpreter {
     constructor(inputElementId, outputElementId) {
         this.inputElement = document.getElementById(inputElementId);
