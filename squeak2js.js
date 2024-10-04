@@ -1,22 +1,17 @@
-// squeak2js.js
 class Squeak2JS {
     constructor() {
-        this.objects = {}; // Store objects from the .image file
+        this.objects = {};
     }
 
-    // Load existing .image file (assuming JSON or similar format)
-    loadImageFile(file, callback) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                // Assuming .image file is JSON-like (adjust if binary)
-                this.objects = JSON.parse(event.target.result);
+    // Load .image file via URL
+    loadImageFileFromURL(url, callback) {
+        fetch(url)
+            .then(response => response.json()) // Assuming .image files are JSON-like (adjust if necessary)
+            .then(data => {
+                this.objects = data;
                 callback(this.objects);
-            } catch (e) {
-                console.error("Failed to load .image file:", e);
-            }
-        };
-        reader.readAsText(file);
+            })
+            .catch(error => console.error('Error loading .image file:', error));
     }
 
     // Add or modify objects
@@ -28,7 +23,7 @@ class Squeak2JS {
         return this.objects[name];
     }
 
-    // Save the modified environment back to .image file
+    // Save the modified environment to a .image file
     saveToImageFile(filename) {
         const data = JSON.stringify(this.objects);
         const blob = new Blob([data], { type: 'application/json' });
@@ -38,12 +33,12 @@ class Squeak2JS {
         link.click();
     }
 
-    // Run code within the environment (sandbox)
+    // Run code in the environment
     runCode(code) {
         try {
             return eval(code);
         } catch (e) {
-            console.error("Error running code:", e);
+            console.error('Error executing code:', e);
             return null;
         }
     }
