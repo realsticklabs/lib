@@ -8,15 +8,13 @@ class SmallProgInterpreter {
         const input = this.inputElement.value.trim().split("\n"); // Split input by lines
         const output = [];
 
-        // Process each line of input
         input.forEach(line => {
-            const values = line.trim().split(" ").map(e => parseInt(e)); // Split line by spaces and convert to numbers
+            const values = line.trim().split(" ").map(Number); // Split line by spaces and convert to numbers
             const lineOutput = values.map(e => isNaN(e) ? '&' : String.fromCharCode(e + 96)).join(""); // Interpret each value in the line
             output.push(lineOutput); // Store the interpreted line
         });
 
-        // Display all interpreted lines
-        this.outputElement.innerText = output.join("\n");
+        this.outputElement.innerText = output.join("\n"); // Display interpreted lines
     }
 
     downloadFile(filename, extension) {
