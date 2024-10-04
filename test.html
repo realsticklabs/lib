@@ -42,9 +42,8 @@
         }
 
         function downloadUnicodeList() {
-            // New function to download the list of first 10000 Unicode characters
             const unicodeChars = [];
-            for (let i = 0; i < 10000; i++) {
+            for (let i = 0; i < 100000; i++) {
                 unicodeChars.push(String.fromCharCode(i + 96)); // Convert to corresponding Unicode characters
             }
             const blob = new Blob([unicodeChars.join(', ')], { type: 'text/plain' });
