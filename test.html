@@ -4,24 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmallProg Interpreter</title>
-    <script src="spitojs.js" defer></script>
+    <script src="spitojs.js"></script> <!-- Include the spitojs.js library -->
 </head>
 <body>
     <h1>SmallProg Interpreter</h1>
     <textarea id="input" placeholder="Enter SmallProg program" style="height: 150px;"></textarea><br>
-    <button id="interpretBtn">Interpret</button>
-    <p>Hint (Only works on specific browsers): Spacebar is number 32</p>
+    <button onclick="runProgram()">Interpret</button>
     <div id="output"></div>
     <br>
-    <button id="downloadBtn">Download as .spi</button>
-    <button id="compressBtn">Compress to .smallprog</button>
+    <button onclick="downloadFile()">Download as .spi</button>
+    <button onclick="compressFile()">Compress to .smallprog</button>
     <input type="file" id="fileInput" accept=".txt,.smallprog" onchange="loadFile(event)">
 
     <script>
-        // Set up button click handlers
-        document.getElementById("interpretBtn").onclick = interpret;
-        document.getElementById("downloadBtn").onclick = () => downloadFile('smallprog', 'spi');
-        document.getElementById("compressBtn").onclick = compressToBase64;
+        function runProgram() {
+            var input = document.getElementById("input").value;
+            var output = data(input, 'spi'); // Call the data function from spitojs.js
+            console.log(output);
+            document.getElementById("output").innerText = output; // Display the output
+        }
+
+        function downloadFile() {
+            var inputText = document.getElementById("input").value;
+            downloadAsFile(inputText, 'smallprog.spi'); // Call the download function from spitojs.js
+        }
+
+        function compressFile() {
+            compress('spi,smallprog'); // Call the compress function from spitojs.js
+        }
+
+        function loadFile(event) {
+            var file = event.target.files[0];
+            loadFile(file, (contents) => {
+                document.getElementById("input").value = contents; // Load file contents into the textarea
+            });
+        }
     </script>
 </body>
 </html>
