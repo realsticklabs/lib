@@ -15,6 +15,7 @@
     <button onclick="downloadFile()">Download as .spi</button>
     <button onclick="compressFile()">Compress to .smallprog</button>
     <input type="file" id="fileInput" accept=".txt,.smallprog" onchange="loadFile(event)">
+    <button onclick="downloadUnicodeList()">Download Unicode List</button> <!-- New button -->
 
     <script>
         function runProgram() {
@@ -38,6 +39,22 @@
             loadFile(file, (contents) => {
                 document.getElementById("input").value = contents; // Load file contents into the textarea
             });
+        }
+
+        function downloadUnicodeList() {
+            // New function to download the list of first 10000 Unicode characters
+            const unicodeChars = [];
+            for (let i = 0; i < 10000; i++) {
+                unicodeChars.push(String.fromCharCode(i + 96)); // Convert to corresponding Unicode characters
+            }
+            const blob = new Blob([unicodeChars.join(', ')], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'unicode_list.txt'; // Specify the filename
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }
     </script>
 </body>
